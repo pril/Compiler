@@ -7,13 +7,13 @@ import utilities.exceptions.EigeneExceptions;
  * @author Daniel Rhein
  * @version 22.06.2011
  */
-public class HashNodeException extends EigeneExceptions{
+public class HashItemException extends EigeneExceptions{
 	
-	public HashNodeException(String message)
+	public HashItemException(String message)
 	{
 		super(message);
 	}
-	public HashNodeException()
+	public HashItemException()
 	{
 		super();
 	}
