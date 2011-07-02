@@ -17,14 +17,12 @@ public class HashTableImpl<Key,Value> implements HashTable<Key, Value>{
 	private static final int MIN_SIZE=1;
 	private int max = 0;
 	private DList listarray=null;
-	private DList list = null;
 	
-	public void HashTableImpl(int size) throws IllegalArgumentException
+	public  HashTableImpl(int size) throws IllegalArgumentException
 	{
 		if (size<MIN_SIZE) throw new IllegalArgumentException("Wert muss immer positiv sein.");
 		max = size;
 		listarray = new DList();
-		list = new DList();
 	}
 
 	@Override
@@ -58,7 +56,6 @@ public class HashTableImpl<Key,Value> implements HashTable<Key, Value>{
 		//Key in Chararray umwandeln
 		char[] chararray = String.valueOf(key).toCharArray();
 		int indexkey =0;
-		String s = new String();
 		//Ermittele index-Key fuer Chararray
 		for (int i = 0;i<chararray.length;i++)
 		{
