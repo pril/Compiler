@@ -18,7 +18,7 @@ package utilities;
  *                        #===============#
  */
 
-import java.util.*; // for Stack class
+import java.util.Stack;
 
 import utilities.exceptions.NodeException;
 import utilities.exceptions.TreeException;
