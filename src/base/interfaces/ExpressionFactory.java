@@ -1,5 +1,7 @@
 package base.interfaces;
 
+import base.OperatorType;
+
 
 /**
  * Eine Factory, liefert bestimmte Expression Informationen
@@ -45,4 +47,11 @@ public interface ExpressionFactory {
 	 */
 	public Expression getZuordnungExpression(String name,Double value) throws IllegalArgumentException;
 	
+	/**
+	 * Liefert zu einem Operatortyp die Entsprechende Operator Expression.
+	 * @param operator
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
+	public Expression getOperatorExpression(OperatorType operator) throws IllegalArgumentException;
 }

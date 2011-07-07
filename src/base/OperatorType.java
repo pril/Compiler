@@ -37,4 +37,6 @@ public enum OperatorType {
 	{
 		return true;
 	}
+	
+
 }
