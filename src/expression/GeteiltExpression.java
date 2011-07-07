@@ -1,8 +1,8 @@
 package expression;
 
-import base.Operator;
 import base.OperatorType;
 import base.interfaces.Expression;
+import base.interfaces.Operator;
 
 public class GeteiltExpression implements Expression{
 

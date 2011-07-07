@@ -1,4 +1,7 @@
-package base;
+package base.interfaces;
+
+import base.OperatorType;
+
 /**
  * Diese Klasse bildet Operatoren ab.
  * Operatoren sind:

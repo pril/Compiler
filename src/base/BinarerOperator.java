@@ -1,4 +1,8 @@
 package base;
+
+import base.interfaces.Identifier;
+import base.interfaces.Operator;
+
 /**
  * BinaereOperatoren sind Operatoren die mindestens zwei Identifier besitzen.
  * Die Identifier sind + - * /

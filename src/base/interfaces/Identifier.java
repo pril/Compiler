@@ -1,4 +1,4 @@
-package base;
+package base.interfaces;
 /**
  * Beschreibt die Oeffentlichen Methodenruempfe eines Identifiers.
  * 
