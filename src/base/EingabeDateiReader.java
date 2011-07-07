@@ -70,6 +70,7 @@ public class EingabeDateiReader implements Beobachtbar{
 	 */
 	public void setFileName(String filename) throws IllegalArgumentException,FileException
 	{
+		sendeStarteMethode(this.getClass().getCanonicalName(), "setFileName");
 		if (filename == null) throw new IllegalArgumentException(ERROR_PARAMETER_NULL);
 		if (filename.trim().isEmpty()) throw new IllegalArgumentException(ERROR_PARAMETER_EMPTY);
 		File file = new File(filename);
@@ -77,6 +78,7 @@ public class EingabeDateiReader implements Beobachtbar{
 		if (!file.canRead()) throw new FileException("Datei " + filename + " kann nicht gelesen werden.");
 		if (!file.isFile()) throw new FileException("Datei " + filename + " ist keine Datei.");
 		this.filename = filename;
+		sendeEndMethode(this.getClass().getCanonicalName(), "setFileName");
 	}
 	
 	public String getFileName()
@@ -93,6 +95,7 @@ public class EingabeDateiReader implements Beobachtbar{
 	 */
 	public String readLine() throws FileReaderException, IOException
 	{
+		sendeStarteMethode(this.getClass().getCanonicalName(), "readLine");
 		checkFilename();
 		if (!isOpen()) throw new FileReaderException(ERROR_FILE_NOT_OPEN);
 		if (filereader==null) throw new FileReaderException(ERROR_READING_FILE_READER_NULL);
@@ -105,6 +108,7 @@ public class EingabeDateiReader implements Beobachtbar{
 			sendeEOF(getFileName());
 			eof = true;
 		}
+		sendeEndMethode(this.getClass().getCanonicalName(), "readLine");
 		return line;
 	}
 	
@@ -152,12 +156,14 @@ public class EingabeDateiReader implements Beobachtbar{
 	 * @return true if the file is open.
 	 */
 	public boolean openFile() throws FileReaderException, FileNotFoundException {
+		sendeStarteMethode(this.getClass().getCanonicalName(), "openFile");
 		if (isOpen()) throw new  FileReaderException("Datei" + getFileName() + "ist bereits geoffnet.");
 		checkFilename();
 		filereader = new FileReader(new File(getFileName()));
 		bufferedReader = new LineNumberReader(filereader);
 		open = true;
 		eof = false;
+		sendeEndMethode(this.getClass().getCanonicalName(), "openFile");
 		return open;
 	}
 	
@@ -169,6 +175,7 @@ public class EingabeDateiReader implements Beobachtbar{
 	 */
 	public boolean closeFile() throws FileReaderException, IOException
 	{
+		sendeStarteMethode(this.getClass().getCanonicalName(), "closeFile");
 		checkFilename();
 		if (!isOpen()) throw new FileReaderException("Datei" + getFileName() + " ist noch nicht geöffnet."); 
 		if (filereader == null) throw new FileReaderException(ERROR_NO_FILEREADER);
@@ -179,6 +186,7 @@ public class EingabeDateiReader implements Beobachtbar{
 		bufferedReader.close();
 		sendeClose(getFileName());
 		open = false;
+		sendeEndMethode(this.getClass().getCanonicalName(), "closeFile");
 		return true;
 	}
 	//==================================Beobachter===================================
@@ -192,6 +200,7 @@ public class EingabeDateiReader implements Beobachtbar{
 	@Override
 	public void removeBeobachter(Beobachter beobachter)
 			throws IllegalArgumentException {
+		//TODO:Hier kann es zu ueberschreibungen kommen. Aendern. Daniel
 		if (beobachter== null) throw new IllegalArgumentException(ERROR_BEOBACHTER_NULL);
 		beobachterliste.remove(beobachter);
 	}
@@ -203,7 +212,7 @@ public class EingabeDateiReader implements Beobachtbar{
 		do
 		{
 			EingabeDateiReaderBeobachter beobachter = (EingabeDateiReaderBeobachter)iterator.next();
-			beobachter.readline(number, line);
+			beobachter.eingabeDateiReaderReadLine(number, line);
 		}
 		while(iterator.hasNext());
 		
@@ -215,7 +224,7 @@ public class EingabeDateiReader implements Beobachtbar{
 		do
 		{
 			EingabeDateiReaderBeobachter beobachter = (EingabeDateiReaderBeobachter)iterator.next();
-			beobachter.open(file);
+			beobachter.eingabeDateiReaderOpen(file);
 		}
 		while(iterator.hasNext());
 	}
@@ -226,7 +235,7 @@ public class EingabeDateiReader implements Beobachtbar{
 		do
 		{
 			EingabeDateiReaderBeobachter beobachter = (EingabeDateiReaderBeobachter)iterator.next();
-			beobachter.close(file);
+			beobachter.eingabeDateiReaderClose(file);
 		}
 		while(iterator.hasNext());
 	}
@@ -237,9 +246,31 @@ public class EingabeDateiReader implements Beobachtbar{
 		do
 		{
 			EingabeDateiReaderBeobachter beobachter = (EingabeDateiReaderBeobachter)iterator.next();
-			beobachter.reachEOF(file);
+			beobachter.eingabeDateiReaderReachEOF(file);
 		}
 		while(iterator.hasNext());
 	}
 	
+	private void sendeStarteMethode(String classname,String methodname)
+	{
+		Iterator iterator = beobachterliste.iterator();
+		do
+		{
+			Beobachter beobachter = (Beobachter)iterator.next();
+			beobachter.startMethod(classname, methodname);
+		}
+		while(iterator.hasNext());
+	}
+
+	private void sendeEndMethode(String classname,String methodname)
+	{
+		Iterator iterator = beobachterliste.iterator();
+		do
+		{
+			Beobachter beobachter = (Beobachter)iterator.next();
+			beobachter.endMethod(classname, methodname);
+		}
+		while(iterator.hasNext());
+	}
+
 }

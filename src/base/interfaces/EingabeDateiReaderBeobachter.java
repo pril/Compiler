@@ -8,8 +8,8 @@ package base.interfaces;
  */
 public interface EingabeDateiReaderBeobachter extends Beobachter{
 	
-	public void readline(int linenumber,String line);
-	public void open(String file);
-	public void close(String file);
-	public void reachEOF(String file);
+	public void eingabeDateiReaderReadLine(int linenumber,String line);
+	public void eingabeDateiReaderOpen(String file);
+	public void eingabeDateiReaderClose(String file);
+	public void eingabeDateiReaderReachEOF(String file);
 }

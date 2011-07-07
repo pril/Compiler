@@ -8,6 +8,6 @@ package base.interfaces;
  */
 public interface Beobachter {
 
-
-	
+	public void startMethod(String classname,String methodname);
+	public void endMethod(String classname,String methodname);
 }
