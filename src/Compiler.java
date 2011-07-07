@@ -81,13 +81,20 @@ public class Compiler implements ParserBeobachter,EingabeDateiReaderBeobachter,B
 
 	@Override
 	public void endMethod(String classname, String methodname) {
-		System.out.println("Ende in " + classname + " de Methode " + methodname);
+		System.out.println("Ende in " + classname + " der Methode " + methodname);
 	}
 
 	@Override
 	public void eingabeDateiReaderReadLine(int linenumber, String line) {
 		System.out.println("Lese");
-		System.out.println(linenumber + ":" + line);
+		if (line == null)
+		{
+			System.out.println(linenumber + ": Leerzeile");
+		}
+		else
+		{
+			System.out.println(linenumber + ":" + line);
+		}
 	}
 
 	@Override
@@ -119,7 +126,6 @@ public class Compiler implements ParserBeobachter,EingabeDateiReaderBeobachter,B
 	@Override
 	public void parserFoundIdentifier(String name) {
 		System.out.println("Parser findet Identifier " + name );
-		
 	}
 
 	@Override

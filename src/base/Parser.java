@@ -50,7 +50,7 @@ public class Parser implements Beobachtbar{
 		{
 			String[] zuordnungsexpression = minimalvalue.split("=");
 			//TODO:Verbessern.
-			if (zuordnungsexpression.length > 1) throw new IllegalArgumentException("Fehlerhafter Ausdruck '" + value +"'.");
+			if (zuordnungsexpression.length > 2 || zuordnungsexpression.length < 2) throw new IllegalArgumentException("Fehlerhafter Ausdruck '" + value +"'.");
 			sendeFoundZuordnung(zuordnungsexpression[0], zuordnungsexpression[1]);
 			expressionlist.add(expressionfactory.getZuordnungExpression(zuordnungsexpression[0], Double.valueOf(zuordnungsexpression[1])));
 			return expressionlist;
