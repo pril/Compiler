@@ -46,6 +46,7 @@ public class EingabeDateiReader implements Beobachtbar{
 	public EingabeDateiReader()
 	{
 		filename = null;
+		beobachterliste = new DList();
 	}
 	
 	/**
@@ -58,6 +59,7 @@ public class EingabeDateiReader implements Beobachtbar{
 	public EingabeDateiReader(String filename) throws IllegalArgumentException, FileException
 	{
 		setFileName(filename);
+		beobachterliste = new DList();
 	}
 	
 	//================================METHODEN==========================================/
