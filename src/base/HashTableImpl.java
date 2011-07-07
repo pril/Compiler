@@ -90,7 +90,6 @@ public class HashTableImpl<Key,Value> implements HashTable<Key, Value>{
 
 	@Override
 	public void containsKey(Key key) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
 		
 	}
 

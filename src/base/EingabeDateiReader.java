@@ -1,12 +1,18 @@
 package base;
 
-import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.LineNumberReader;
+import java.util.Iterator;
 
 import utilities.exceptions.FileException;
+import utilities.folz_list_klassen.normal.DList;
 import base.exceptions.FileReaderException;
+import base.interfaces.Beobachtbar;
+import base.interfaces.Beobachter;
+import base.interfaces.EingabeDateiReaderBeobachter;
 
 /**
  * Liest die Eingabedatei und Parst die Datei.
@@ -14,18 +20,26 @@ import base.exceptions.FileReaderException;
  * @author Daniel
  * @version 05.07.2011 20:21:39
  */
-public class EingabeDateiReader {
+public class EingabeDateiReader implements Beobachtbar{
 	
-	
+	//============================================KONSTANTEN=====================================================/
+	private static final String ERROR_READING_LINEREADER_NULL = "Das einlesen einer Datei ist nicht möglich. Da der BufferedReader null ist.";
+	private static final String ERROR_READING_FILE_READER_NULL = "Das einlesen einer Datei ist nicht moglich. Da der FileReader null ist.";
+	private static final String ERROR_FILE_NOT_OPEN = "Die Datei wurde noch nicht zum lesen geöffnet.";
+	private static final String ERROR_FILE_NAME_NULL = "Sie haben noch keinen Dateinamen festgelegt.";
+	private static final String ERROR_NO_BUFFEREDREADER = "BufferedReader wurde noch nicht festgelegt.";
+	private static final String ERROR_NO_FILEREADER = "FileReader ist noch nicht festgelegt.";
+	private static final String ERROR_BEOBACHTER_NULL = "Beobachter darf nicht null sein.";
 	private static final String ERROR_PARAMETER_EMPTY = "Parameter darf nicht leer sein";
 	private static final String ERROR_PARAMETER_NULL = "Parameter darf nicht null sein.";
 	private String filename = "";
-	private BufferedReader bufferedReader = null;
+	private LineNumberReader bufferedReader = null;
 	private FileReader filereader = null;
-	private boolean open = false; 
+	private boolean open = false; //Datei geoeffnet oder nicht.
 	private boolean eof = false; //End of File.
+	private DList beobachterliste; //Liste aller beobachter
 	
-	
+	//============================================KONSTRUKTOR=====================================================/
 	/**
 	 * Konstruktor
 	 */
@@ -38,11 +52,15 @@ public class EingabeDateiReader {
 	 * Konstruktor
 	 * @param filename
 	 * Absoluter Pfad zur Datei.
+	 * @throws FileException 
+	 * @throws IllegalArgumentException 
 	 */
-	public EingabeDateiReader(String filename)
+	public EingabeDateiReader(String filename) throws IllegalArgumentException, FileException
 	{
-		filename = null;
+		setFileName(filename);
 	}
+	
+	//================================METHODEN==========================================/
 	
 	/**
 	 * Legt den Dateinamen fest.
@@ -76,13 +94,17 @@ public class EingabeDateiReader {
 	public String readLine() throws FileReaderException, IOException
 	{
 		checkFilename();
-		if (!isOpen()) throw new FileReaderException("Die Datei wurde noch nicht zum lesen geöffnet.");
-		if (filereader==null) throw new FileReaderException("Das einlesen einer Datei ist nicht moglich. Da der FileReader null ist.");
-		if (bufferedReader == null) throw new FileReaderException("Das einlesen einer Datei ist nicht möglich. Da der BufferedReader null ist.");
+		if (!isOpen()) throw new FileReaderException(ERROR_FILE_NOT_OPEN);
+		if (filereader==null) throw new FileReaderException(ERROR_READING_FILE_READER_NULL);
+		if (bufferedReader == null) throw new FileReaderException(ERROR_READING_LINEREADER_NULL);
 		if (eof) return null;
 		String line = "";
 		line = bufferedReader.readLine();
-		if (line == null) eof = true; 
+		sendeReadLine(bufferedReader.getLineNumber(), line);
+		if (line == null) {
+			sendeEOF(getFileName());
+			eof = true;
+		}
 		return line;
 	}
 	
@@ -93,7 +115,7 @@ public class EingabeDateiReader {
  */
 	private void checkFilename() throws FileReaderException
 	{
-		if (getFileName()==null) throw new FileReaderException("Sie haben noch keinen Dateinamen festgelegt.");
+		if (getFileName()==null) throw new FileReaderException(ERROR_FILE_NAME_NULL);
 			
 	}
 	
@@ -115,13 +137,109 @@ public class EingabeDateiReader {
 	}
 	
 	/**
+	 * Wurde die Datei geschlossen
+	 * @return
+	 */
+	public boolean isClosed() {
+		return !open;
+	}
+	
+	/**
 	 * Oeffne die Datei
 	 * @param open
+	 * @throws FileReaderException
+	 * @throws FileNotFoundException 
+	 * @return true if the file is open.
 	 */
-	public void openFile() throws FileReaderException {
-		if (open) throw new  FileReaderException("Datei" + getFileName() + "ist bereits geoffnet.");
-		if (getFileName()== null)  
+	public boolean openFile() throws FileReaderException, FileNotFoundException {
+		if (isOpen()) throw new  FileReaderException("Datei" + getFileName() + "ist bereits geoffnet.");
+		checkFilename();
+		filereader = new FileReader(new File(getFileName()));
+		bufferedReader = new LineNumberReader(filereader);
+		open = true;
+		eof = false;
+		return open;
+	}
+	
+	/**
+	 * Close the File 
+	 * @return
+	 * @throws FileReaderException
+	 * @throws IOException 
+	 */
+	public boolean closeFile() throws FileReaderException, IOException
+	{
+		checkFilename();
+		if (!isOpen()) throw new FileReaderException("Datei" + getFileName() + " ist noch nicht geöffnet."); 
+		if (filereader == null) throw new FileReaderException(ERROR_NO_FILEREADER);
+		if (bufferedReader == null) throw new FileReaderException(ERROR_NO_BUFFEREDREADER);
+		eof = false;
+		open = false;
+		filereader.close();
+		bufferedReader.close();
+		sendeClose(getFileName());
+		open = false;
+		return true;
+	}
+	//==================================Beobachter===================================
+	@Override
+	public void addBeobachter(Beobachter beobachter)
+			throws IllegalArgumentException {
+		if (beobachter == null) throw new IllegalArgumentException(ERROR_BEOBACHTER_NULL);
+		beobachterliste.add(beobachterliste.size(), beobachter);
 	}
 
+	@Override
+	public void removeBeobachter(Beobachter beobachter)
+			throws IllegalArgumentException {
+		if (beobachter== null) throw new IllegalArgumentException(ERROR_BEOBACHTER_NULL);
+		beobachterliste.remove(beobachter);
+	}
 
+	//============================NACHRICHTEN AN BEOBACHTER=============================
+	private void sendeReadLine(int number,String line)
+	{
+		Iterator iterator = beobachterliste.iterator();
+		do
+		{
+			EingabeDateiReaderBeobachter beobachter = (EingabeDateiReaderBeobachter)iterator.next();
+			beobachter.readline(number, line);
+		}
+		while(iterator.hasNext());
+		
+	}
+
+	private void sendeOpen(String file)
+	{
+		Iterator iterator = beobachterliste.iterator();
+		do
+		{
+			EingabeDateiReaderBeobachter beobachter = (EingabeDateiReaderBeobachter)iterator.next();
+			beobachter.open(file);
+		}
+		while(iterator.hasNext());
+	}
+	
+	private void sendeClose(String file)
+	{
+		Iterator iterator = beobachterliste.iterator();
+		do
+		{
+			EingabeDateiReaderBeobachter beobachter = (EingabeDateiReaderBeobachter)iterator.next();
+			beobachter.close(file);
+		}
+		while(iterator.hasNext());
+	}
+	
+	private void sendeEOF(String file)
+	{
+		Iterator iterator = beobachterliste.iterator();
+		do
+		{
+			EingabeDateiReaderBeobachter beobachter = (EingabeDateiReaderBeobachter)iterator.next();
+			beobachter.reachEOF(file);
+		}
+		while(iterator.hasNext());
+	}
+	
 }
