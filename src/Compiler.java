@@ -75,20 +75,17 @@ public class Compiler implements ParserBeobachter,EingabeDateiReaderBeobachter,B
 	
 	@Override
 	public void startMethod(String classname, String methodname) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("Starte in " + classname + " bei methode " + methodname);
 	}
 
 	@Override
 	public void endMethod(String classname, String methodname) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("Ende in " + classname + " de Methode " + methodname);
 	}
 
 	@Override
 	public void eingabeDateiReaderReadLine(int linenumber, String line) {
-		// TODO Auto-generated method stub
-		
+		System.out.println(linenumber + ":" + line);
 	}
 
 	@Override
