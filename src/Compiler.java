@@ -106,32 +106,29 @@ public class Compiler implements ParserBeobachter,EingabeDateiReaderBeobachter,B
 
 	@Override
 	public void parserRecievedLine(String line) {
-		// TODO Auto-generated method stub
+		System.out.println("Parser liest " + line);
 		
 	}
 
 	@Override
 	public void parserFoundZuordnung(String name, String value) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("Parser findet Zuordnung " + name + "=" + value);
 	}
 
 	@Override
 	public void parserFoundIdentifier(String name) {
-		// TODO Auto-generated method stub
+		System.out.println("Parser findet Identifier " + name );
 		
 	}
 
 	@Override
 	public void parserFoundOperator(String name) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("Parser findet Operator " + name );
 	}
 
 	@Override
 	public void parserFoundArithmethicExpression(Expressionlist expressionlist) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("Finde Arithmetischen Ausdruck" + expressionlist );
 	}
 
 }

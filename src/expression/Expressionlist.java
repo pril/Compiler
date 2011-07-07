@@ -1,5 +1,7 @@
 package expression;
 
+import java.util.Iterator;
+
 import base.interfaces.Expression;
 import utilities.folz_list_klassen.normal.DList;
 
@@ -65,6 +67,28 @@ public class Expressionlist {
 	public boolean isOperator() {
 		return operator;
 	}
-	
+	/**
+	 * 
+	 */
+	public String toString()
+	{
+		Iterator iterator = expressionlist.iterator();
+		StringBuilder sb = new StringBuilder();
+		while (iterator.hasNext())
+		{
+			Expression expression = (Expression)iterator.next();
+			if (expression.isZuordnung())
+			{
+				sb.append(expression.getObject());
+				sb.append("=");
+				sb.append(expression.getValue());
+			}
+			else
+			{
+				sb.append(expression.getObject());
+			}
+		}
+		return sb.toString();
+	}
 	
 }
