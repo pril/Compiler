@@ -1,5 +1,7 @@
+import utilities.exceptions.FileException;
 import base.EingabeDateiReader;
 import base.Parser;
+import base.exceptions.FileReaderException;
 import base.interfaces.Beobachter;
 import base.interfaces.EingabeDateiReaderBeobachter;
 import base.interfaces.ParserBeobachter;
@@ -13,17 +15,53 @@ public class Compiler implements ParserBeobachter,EingabeDateiReaderBeobachter,B
 	{
 		EingabeDateiReader eingabedateireader = new EingabeDateiReader();
 		Parser parser = new Parser();
+		String line = "";
+		Expressionlist expressionlist = new Expressionlist();
+		eingabedateireader.addBeobachter(this);
+		parser.addBeobachter(this);
 		if (args.length>=1)
 		{
 			for (String argumente:args)
 			{
-			
-			eingabedateireader.addBeobachter(this);
+			try
+			{
 			eingabedateireader.setFileName(argumente);
-			
+			while(!eingabedateireader.isEof())
+			{
+			 line = eingabedateireader.readLine();
+			 expressionlist = parser.getExpression(line);
+			 if (expressionlist != null)
+			 {
+				 for (int i =0;i<expressionlist.size();i++)
+				 {
+					 if (expressionlist.get(i).isOperator() || expressionlist.get(i).isIdentifier())
+					 {
+						//Arithmetischer ausdruck. 
+					 }
+					 if (expressionlist.get(i).isZuordnung())
+					 {
+						 //HashMap??=
+					 }
+					 
+				 }
+			 
+			 }
+			}
+			}
+			catch(FileReaderException exception)
+			{
+				exception.printStackTrace();
+			}
+			catch(FileException exception)
+			{
+				exception.printStackTrace();
+			}
+			catch(Exception exception)
+			{
+				exception.printStackTrace();
 			}
 		}
-
+		}
 	}
 	
 	/**
