@@ -85,25 +85,23 @@ public class Compiler implements ParserBeobachter,EingabeDateiReaderBeobachter,B
 
 	@Override
 	public void eingabeDateiReaderReadLine(int linenumber, String line) {
+		System.out.println("Lese");
 		System.out.println(linenumber + ":" + line);
 	}
 
 	@Override
 	public void eingabeDateiReaderOpen(String file) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("Oeffne Datei:" + file);
 	}
 
 	@Override
 	public void eingabeDateiReaderClose(String file) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("Schliese Datei:" + file);
 	}
 
 	@Override
 	public void eingabeDateiReaderReachEOF(String file) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("Erreiche Dateiende von Datei " + file);
 	}
 
 	@Override
