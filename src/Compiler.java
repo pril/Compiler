@@ -26,7 +26,7 @@ public class Compiler implements ParserBeobachter,EingabeDateiReaderBeobachter,B
 			try
 			{
 			eingabedateireader.setFileName(argumente);
-			eingabedateireader.readLine();
+			eingabedateireader.openFile();
 			while(!eingabedateireader.isEof())
 			{
 			 line = eingabedateireader.readLine();
