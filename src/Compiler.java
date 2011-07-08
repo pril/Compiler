@@ -1,5 +1,6 @@
 import utilities.exceptions.FileException;
 import base.EingabeDateiReader;
+import base.HashTableImpl;
 import base.Parser;
 import base.exceptions.FileReaderException;
 import base.interfaces.Beobachter;
@@ -14,6 +15,7 @@ public class Compiler implements ParserBeobachter,EingabeDateiReaderBeobachter,B
 	public Compiler(String args[])
 	{
 		EingabeDateiReader eingabedateireader = new EingabeDateiReader();
+		HashTableImpl<String,Double> hashtable = new HashTableImpl<String, Double>(100);
 		Parser parser = new Parser();
 		String line = "";
 		Expressionlist expressionlist = new Expressionlist();
@@ -35,15 +37,27 @@ public class Compiler implements ParserBeobachter,EingabeDateiReaderBeobachter,B
 			 {
 				 for (int i =0;i<expressionlist.size();i++)
 				 {
-					 if (expressionlist.get(i).isOperator() || expressionlist.get(i).isIdentifier())
+					 if (expressionlist.isOperator())
 					 {
-						//Arithmetischer ausdruck. 
+						 
+						 if (expressionlist.get(i).isOperator())
+						 {
+							 //Arithmetischer ausdruck. 
+						 }
+						 if (expressionlist.get(i).isIdentifier())
+						 {
+							 if (!hashtable.containsKey(expressionlist.get(i).getObject()))
+								hashtable.insert(key); 
+						 }
 					 }
 					 if (expressionlist.get(i).isZuordnung())
 					 {
 						 //HashMap??=
 					 }
-					 
+					 if (expressionlist.get(i).isIdentifier())
+					 {
+						//HashMap??
+					 }
 				 }
 			 
 			 }

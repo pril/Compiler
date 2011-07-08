@@ -1,8 +1,12 @@
 package base;
 
+import java.util.Iterator;
+
 import utilities.folz_list_klassen.normal.DList;
 import base.exceptions.HashItemException;
 import base.exceptions.HashTableException;
+import base.interfaces.Beobachtbar;
+import base.interfaces.Beobachter;
 import base.interfaces.HashTable;
 
 /**
@@ -12,11 +16,12 @@ import base.interfaces.HashTable;
  * @author Daniel
  * @version 01.07.2011 10:30:29
  */
-public class HashTableImpl<Key,Value> implements HashTable<Key, Value>{
+public class HashTableImpl<Key,Value> implements HashTable<Key, Value>, Beobachtbar{
 
 	private static final int MIN_SIZE=1;
 	private int max = 0;
 	private DList listarray=null;
+	private DList beobachter =null;
 	
 	public  HashTableImpl(int size) throws IllegalArgumentException
 	{
@@ -45,6 +50,8 @@ public class HashTableImpl<Key,Value> implements HashTable<Key, Value>{
 		}
 	}
 
+	
+	
 	/**
 	 * Try to generate a Key with the given information
 	 * @param key
@@ -53,16 +60,7 @@ public class HashTableImpl<Key,Value> implements HashTable<Key, Value>{
 	private int generateKey(Key key) throws IllegalArgumentException
 	{
 		if (key == null) throw new IllegalArgumentException("Key kann nicht null sein.");
-		//Key in Chararray umwandeln
-		char[] chararray = String.valueOf(key).toCharArray();
-		int indexkey =0;
-		//Ermittele index-Key fuer Chararray
-		for (int i = 0;i<chararray.length;i++)
-		{
-			indexkey =indexkey +  (chararray[i]*i);
-		}
-		indexkey = indexkey%max;
-		return indexkey;
+		return key.hashCode()%max;
 	}
 
 	@Override
@@ -90,7 +88,17 @@ public class HashTableImpl<Key,Value> implements HashTable<Key, Value>{
 
 	@Override
 	public void containsKey(Key key) throws IllegalArgumentException {
-		
+		int indexkey = generateKey(key);
+		if (listarray.get(indexkey)!=null)
+		{
+			
+			Iterator iterator = ((DList)listarray.get(indexkey)).iterator();
+			while(iterator.hasNext())
+			{
+				HashItem hashitem = (HashItem)iterator.next();
+				if (hashitem.getKey().equals(key)) return true;
+			}
+		}
 	}
 
 	@Override
@@ -106,6 +114,40 @@ public class HashTableImpl<Key,Value> implements HashTable<Key, Value>{
 	@Override
 	public boolean isFull() {
 		return listarray.size()==max;
+	}
+
+	@Override
+	public void addBeobachter(Beobachter beobachter)
+			throws IllegalArgumentException {
+		
+		
+	}
+
+	@Override
+	public void removeBeobachter(Beobachter beobachter)
+			throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void insert(Key key) throws IllegalArgumentException,
+			HashTableException, HashItemException {
+	if (listarray.size()==max) throw new HashTableException("Maximalgroesse ueberschritten.Hashtabelle ist voll.");
+		
+		int indexkey = generateKey(key);
+		HashItem<Key,Value> hashitem = new HashItem<Key, Value>(key,null);
+		if (listarray.get(indexkey)==null)
+		{	DList list = new DList();
+			list.add(0,hashitem);
+			listarray.add(indexkey, list);
+		}
+		else
+		{
+			DList list;
+			list =((DList)listarray.get(indexkey));
+			list.add(list.size(), hashitem);
+		}		
 	}
 	
 	

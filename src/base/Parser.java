@@ -55,7 +55,6 @@ public class Parser implements Beobachtbar{
 			expressionlist.add(expressionfactory.getZuordnungExpression(zuordnungsexpression[0], Double.valueOf(zuordnungsexpression[1])));
 			return expressionlist;
 		}
-		
 		if (containsOperator(minimalvalue)) //Prueft ob der Ausdruck einen Operator enthaelt.
 		{
 			for (char c:valuelist) 
@@ -81,7 +80,13 @@ public class Parser implements Beobachtbar{
 		if (sb.length()!=0) //Noch fehlende Operatoren hinzufuegen.
 		{
 			expressionlist.add(expressionfactory.getIdentifierExpression(sb.toString()));
+			sendeFoundIdentifier(sb.toString());
 			sb.delete(0, sb.length());
+		}
+		if (expressionlist.size()==0) //wurde noch kein Wert zugeordnet --> Idendifier gefunden.
+		{
+			sendeFoundIdentifier(minimalvalue);
+			expressionlist.add(expressionfactory.getIdentifierExpression(minimalvalue));
 		}
 		sendeEndMethode(getClass().getCanonicalName(),"getExpression");
 		return expressionlist;
