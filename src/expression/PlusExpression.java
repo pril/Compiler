@@ -3,7 +3,8 @@ package expression;
 import base.OperatorType;
 
 public class PlusExpression implements base.interfaces.Expression{
-
+	private Double value;
+	
 	@Override
 	public boolean isOperator() {
 		return true;
@@ -26,7 +27,12 @@ public class PlusExpression implements base.interfaces.Expression{
 
 	@Override
 	public Double getValue() {
-		return null;
+		return value;
+	}
+
+	@Override
+	public void setValue(Double newValue) {
+		this.value = newValue;
 	}
 	
 }

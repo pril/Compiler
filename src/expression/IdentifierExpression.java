@@ -3,12 +3,13 @@ package expression;
 
 public class IdentifierExpression implements base.interfaces.Expression{
 
-	private String value = "";
-	
-	public IdentifierExpression(String value) throws IllegalArgumentException
+	private Double value;
+	private String name;
+
+	public IdentifierExpression(String name) throws IllegalArgumentException
 	{
 		if (value == null) throw new IllegalArgumentException("Value can't be null");
-		this.value = value;
+		this.name = name;
 	}
 	
 	@Override
@@ -23,7 +24,7 @@ public class IdentifierExpression implements base.interfaces.Expression{
 
 	@Override
 	public String getObject() {
-		return value;
+		return name;
 	}
 
 	@Override
@@ -33,7 +34,12 @@ public class IdentifierExpression implements base.interfaces.Expression{
 
 	@Override
 	public Double getValue() {
-		return null;
+		return value;
+	}
+
+	@Override
+	public void setValue(Double newValue) {
+		this.value = newValue;
 	}
 	
 }

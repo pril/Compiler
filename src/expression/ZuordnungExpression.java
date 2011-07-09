@@ -6,7 +6,7 @@ import base.interfaces.Expression;
 public class ZuordnungExpression implements Expression{
 
 	private String name = "";
-	private Double value = 0.0;
+	private Double value;
 	
 	public ZuordnungExpression(String name,Double value) throws IllegalArgumentException
 	{
@@ -42,6 +42,11 @@ public class ZuordnungExpression implements Expression{
 	@Override
 	public Double getValue() {
 		return value;
+	}
+
+	@Override
+	public void setValue(Double newValue) {
+		this.value = newValue;
 	}
 
 }

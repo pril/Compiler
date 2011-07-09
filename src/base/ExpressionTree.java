@@ -4,11 +4,18 @@ import base.interfaces.Expression;
 import utilities.exceptions.TreeException;
 import utilities.interfaces.BinaryTree;
 
+/**
+ * 
+ * @author Alexei Felberg
+ * @author Daniel Rhein
+ * @version 09.07.2011
+ */
 public class ExpressionTree implements BinaryTree {
+	private static final String EXCEPTION_FALSE_ARITHMETIC_EXPRESSION = "ExpressionTree stellt keinen gueltigen arithmetischen Ausdruck dar!";
+	private static final String EXCEPTION_RECEIVED_NULL = "Es wurde null an ExpressionTree uebergeben.";
+	private static final String EXCEPTION_IS_EMPTY = "ExpressionTree is empty!";
 	private static final String OUT_NEW_LINE = "\n";
 	private static final String OUT_DELIMITER = "\t";
-	private static final String EXCEPTION_RECEIVED_NULL = "Es wurde null an BinaryTree uebergeben.";
-	private static final String EXCEPTION_IS_EMPTY = "BinaryTree is empty!";
 	private ExpressionNode root;
 	private int size = 0;
 	private final static int DEFAUL_STACKSIZES = 256;
@@ -36,6 +43,24 @@ public class ExpressionTree implements BinaryTree {
 		this(DEFAUL_STACKSIZES);
 	}
 
+	/**
+	 * Liefert das Ergebnis des ExpressionTrees.
+	 * 
+	 * @return Double-Wert als Ergebnis des ExpressionTrees.
+	 * @throws TreeException
+	 *             wenn der Baum keinen gueltigen Ausdruck darstellt oder er
+	 *             leer ist.
+	 */
+	public Double calc() throws TreeException {
+		if(size == 0)
+			throw new TreeException(EXCEPTION_IS_EMPTY);
+		if (!optStack.isEmpty() || opndStack.size() > 1)
+			throw new TreeException(EXCEPTION_FALSE_ARITHMETIC_EXPRESSION);
+		if (opndStack.size() == 1)
+			root = (ExpressionNode) opndStack.top();
+		return root.getData().getValue();
+	}
+
 	@Override
 	public void insert(Object object) throws TreeException {
 		if (object == null)
@@ -49,10 +74,9 @@ public class ExpressionTree implements BinaryTree {
 						(Expression) opndStack.top());
 				opndStack.pop();
 				opndStack.push(newExpression);
-				if (opndStack.size() == 1)
-					root = (ExpressionNode) opndStack.top();
 				return;
 			}
+		size++;
 		if (!(object instanceof Expression))
 			throw new TreeException();
 		Expression expression = (Expression) object;
@@ -111,12 +135,18 @@ public class ExpressionTree implements BinaryTree {
 							opndStack.pop();
 							opndStack.push(currentExpression);
 						}
-						if (OperatorType.valueOf(currentExpression.getData().getObject())
+						if (OperatorType.valueOf(
+								currentExpression.getData().getObject())
 								.equals(OperatorType.KLAMMER_AUF)
-								|| OperatorType.valueOf(currentExpression.getData()
-										.getObject()).getPriority() 
-										< OperatorType.valueOf(currentExpression.getData()
-										.getObject()).getPriority())
+								|| OperatorType
+										.valueOf(
+												currentExpression.getData()
+														.getObject())
+										.getPriority() < OperatorType
+										.valueOf(
+												currentExpression.getData()
+														.getObject())
+										.getPriority())
 							break;
 						optStack.push(currentExpression);
 					}
@@ -126,7 +156,21 @@ public class ExpressionTree implements BinaryTree {
 		else if (expression.isIdentifier())
 			opndStack.push(newExpression);
 	}
+	
+	public String toString() {
+        StringBuffer sb = new StringBuffer();
+        toString(sb, root, " ");
+        return sb.toString();
+    }
 
+    private void toString(StringBuffer sb, ExpressionNode currentNode, String ausgabe) {
+        if (currentNode != null) {
+            toString(sb, currentNode.rightChild, ausgabe + OUT_DELIMITER);
+            sb.append(ausgabe).append(OUT_DELIMITER + "{" + currentNode.getData() + "; " +currentNode.getValue() + "}" + OUT_NEW_LINE);
+            toString(sb, currentNode.leftChild, ausgabe + OUT_DELIMITER);
+        }
+    }
+    
 	@Override
 	public int size() {
 		return size;
