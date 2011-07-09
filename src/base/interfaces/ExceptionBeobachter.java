@@ -4,10 +4,10 @@ package base.interfaces;
  * Ein Fehlerbeobachter beobachtet Fehler und Empfaengt den entsprechenden Fehler.
  * @author Alexei Felberg
  * @author Daniel
- * @version 06.07.2011 18:35:37
+ * @version 07.07.2011 21:42:48
  */
 public interface ExceptionBeobachter extends Beobachter {
 	
 	
-	public void reciveErrorMessage(Exception exception);
+	public void receiveErrorMessage(Exception exception);
 }

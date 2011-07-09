@@ -8,7 +8,7 @@ package utilities.interfaces;
 /** Abstrakte Klasse Stack */
 public abstract class Stack {
    /** Ist der Stack leer?     */
-   public boolean empty () {
+   public boolean isEmpty () {
        return (size() == 0);
    }
    /** Ist der Stack voll?      */
