@@ -87,7 +87,7 @@ public class HashTableImpl<Key,Value> implements HashTable<Key, Value>, Beobacht
 	}
 
 	@Override
-	public void containsKey(Key key) throws IllegalArgumentException {
+	public boolean containsKey(Key key) throws IllegalArgumentException {
 		int indexkey = generateKey(key);
 		if (listarray.get(indexkey)!=null)
 		{
@@ -99,6 +99,7 @@ public class HashTableImpl<Key,Value> implements HashTable<Key, Value>, Beobacht
 				if (hashitem.getKey().equals(key)) return true;
 			}
 		}
+		return false;
 	}
 
 	@Override

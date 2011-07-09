@@ -2,7 +2,10 @@ import utilities.exceptions.FileException;
 import base.EingabeDateiReader;
 import base.HashTableImpl;
 import base.Parser;
+import base.exceptions.CompilerExceptions;
 import base.exceptions.FileReaderException;
+import base.exceptions.HashItemException;
+import base.exceptions.HashTableException;
 import base.interfaces.Beobachter;
 import base.interfaces.EingabeDateiReaderBeobachter;
 import base.interfaces.ParserBeobachter;
@@ -47,16 +50,17 @@ public class Compiler implements ParserBeobachter,EingabeDateiReaderBeobachter,B
 						 if (expressionlist.get(i).isIdentifier())
 						 {
 							 if (!hashtable.containsKey(expressionlist.get(i).getObject()))
-								hashtable.insert(key); 
-						 }
+								 throw new CompilerExceptions("Identifier " + expressionlist.get(i).getObject() + " ist unbekannt.");
+							 						 }
 					 }
 					 if (expressionlist.get(i).isZuordnung())
 					 {
-						 //HashMap??=
+						 if (!hashtable.containsKey(expressionlist.get(i).getObject()))
+						 	throw new CompilerExceptions("Identifier " + expressionlist.get(i).getObject() + " ist unbekannt.");
 					 }
 					 if (expressionlist.get(i).isIdentifier())
 					 {
-						//HashMap??
+						 hashtable.insert(expressionlist.get(i).getObject());
 					 }
 				 }
 			 
@@ -72,6 +76,18 @@ public class Compiler implements ParserBeobachter,EingabeDateiReaderBeobachter,B
 				exception.printStackTrace();
 			}
 			catch(Exception exception)
+			{
+				exception.printStackTrace();
+			}
+			catch(HashItemException exception)
+			{
+				exception.printStackTrace();
+			}
+			catch(HashTableException exception)
+			{
+				exception.printStackTrace();
+			}
+			catch(CompilerExceptions exception)
 			{
 				exception.printStackTrace();
 			}

@@ -55,8 +55,9 @@ public interface HashTable<Key,Value> {
 	 * Gibt an ob ein Schluessel schon vorhanden ist
 	 * @param key
 	 * @throws IllegalArgumentException
+	 * @return boolean key.
 	 */
-	public void containsKey(Key key) throws IllegalArgumentException;
+	public boolean containsKey(Key key) throws IllegalArgumentException;
 	
 	/**
 	 * Gibt die size an.
