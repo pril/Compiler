@@ -71,17 +71,20 @@ public class Compiler implements ParserBeobachter,EingabeDateiReaderBeobachter,B
 						 if (!hashtable.containsKey(expressionlist.get(i)))
 						 	throw new CompilerExceptions("Identifier " + expressionlist.get(i).getObject() + " ist unbekannt.");
 						 hashtable.get(expressionlist.get(i)).getKey().setValue(expressionlist.get(i).getValue());
-//						 hashitem.setValue(expressionlist.get(i).getValue());
+						 //hashitem.setValue(expressionlist.get(i).getValue());
 							 zuordnung = true;
 					 }
 					 if (expressionlist.get(i).isIdentifier())
 					 {
 						 hashtable.insert(expressionlist.get(i));
+						 
 					 }
 				 }
 				 if (arithmetischerausdruck==true)
 				 {
-					 System.out.println("Expression Tree ausgabe:\n"+ expressiontree.toString());	
+					 System.out.println("Inhalt der Hashtable:"+hashtable.toString());
+					 System.out.println("Expression Tree ausgabe:\n"+ expressiontree.toString());
+					 arithmetischerausdruck=false;
 				 }
 				 
 			 }
@@ -89,6 +92,7 @@ public class Compiler implements ParserBeobachter,EingabeDateiReaderBeobachter,B
 			 {
 				 if (zuordnung==true)
 				 {
+				 System.out.println("Inhalt der Hashtable:"+hashtable.toString());
 				 System.out.println("Expression Tree ausgabe:\n"+ expressiontree.toString());
 				 System.out.println("Auswertung des Expressiontrees ergibt:" + expressiontree.calc());
 				 zuordnung = false;
