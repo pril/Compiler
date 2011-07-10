@@ -170,13 +170,13 @@ public class HashTableImpl<Key,Value> implements HashTable<Key, Value>, Beobacht
 		{
 			if (listarray[i]== null)
 			{
-				sb.append(i).append(". ").append("null ");
+//				sb.append(i).append(". ").append("null ");
 			}
 			else
 			{
 				DList liste = listarray[i];
-				for (int e=0;e<liste.size();e++)
-				sb.append(i).append(liste.get(e).toString()).append("null ");
+				for (int e=1;e<liste.size();e++)
+				sb.append(i).append(liste.get(e).toString()).append(" | ");
 			}
 		}
 		return sb.toString();
