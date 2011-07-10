@@ -15,7 +15,7 @@ public class IdentifierExpression implements base.interfaces.Expression {
 	public boolean isOperator() {
 		return false;
 	}
-
+	
 	@Override
 	public boolean isIdentifier() {
 		return true;
