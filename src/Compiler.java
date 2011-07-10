@@ -22,6 +22,7 @@ public class Compiler implements ParserBeobachter,EingabeDateiReaderBeobachter,B
 	public Compiler(String args[])
 	{
 		boolean zuordnung =false;
+		boolean arithmetischerausdruck = false;
 		EingabeDateiReader eingabedateireader = new EingabeDateiReader();
 		ExpressionTree expressiontree = new ExpressionTree();
 		HashTableImpl<Expression,Double> hashtable = new HashTableImpl<Expression, Double>(100);
@@ -63,6 +64,7 @@ public class Compiler implements ParserBeobachter,EingabeDateiReaderBeobachter,B
 								 expressiontree.insert(hashtable.get(expressionlist.get(i)).getKey());
 							 }
 						 }
+						 arithmetischerausdruck=true;
 					 }
 					 if (expressionlist.get(i).isZuordnung())
 					 {
@@ -76,6 +78,10 @@ public class Compiler implements ParserBeobachter,EingabeDateiReaderBeobachter,B
 					 {
 						 hashtable.insert(expressionlist.get(i));
 					 }
+				 }
+				 if (arithmetischerausdruck==true)
+				 {
+					 System.out.println("Expression Tree ausgabe:\n"+ expressiontree.toString());	
 				 }
 				 
 			 }
