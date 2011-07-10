@@ -5,7 +5,8 @@ import base.interfaces.Expression;
 import base.interfaces.Operator;
 
 public class GeteiltExpression implements Expression{
-
+	private Double value;
+	
 	@Override
 	public boolean isOperator() {
 		return true;
@@ -28,7 +29,12 @@ public class GeteiltExpression implements Expression{
 
 	@Override
 	public Double getValue() {
-		return null;
+		return value;
+	}
+
+	@Override
+	public void setValue(Double newValue) {
+		this.value = newValue;
 	}
 
 }

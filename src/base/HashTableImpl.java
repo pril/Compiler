@@ -28,6 +28,10 @@ public class HashTableImpl<Key,Value> implements HashTable<Key, Value>, Beobacht
 		if (size<MIN_SIZE) throw new IllegalArgumentException("Wert muss immer positiv sein.");
 		max = size;
 		listarray = new DList();
+		for (int i = 0;i<size;i++)
+		{
+			listarray.add(i, null); //Null-Objekte einfuegen.
+		}
 	}
 
 	@Override

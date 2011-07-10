@@ -7,5 +7,6 @@ public interface Expression {
 	public boolean isZuordnung();
 	public String getObject();
 	public Double getValue();
+	public void setValue(Double newValue);
 	
 }

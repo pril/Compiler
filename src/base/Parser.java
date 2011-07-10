@@ -151,13 +151,13 @@ public class Parser implements Beobachtbar{
 	}
 	//============================NACHRICHTEN AN BEOBACHTER=============================
 
-	private void sendeRecieveLine(String line)
+	private void sendeReceiveLine(String line)
 	{
 		Iterator iterator = beobachterliste.iterator();
 		do
 		{
 			ParserBeobachter beobachter = (ParserBeobachter)iterator.next();
-			beobachter.parserRecievedLine(line);
+			beobachter.parserReceivedLine(line);
 		}
 		while(iterator.hasNext());
 		
