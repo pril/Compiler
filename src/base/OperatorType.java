@@ -19,6 +19,18 @@ public enum OperatorType {
 		this.priority = priotrity; 
 	}
 	
+	public static OperatorType operatorValueOf(String value)
+	{
+		for (OperatorType operatortyp:values())
+		{
+			if (operatortyp.bezeichnung.equals(value))
+			{
+				return operatortyp;
+			}
+		}
+		return null;
+	}
+	
 	public String toString()
 	{
 		return bezeichnung;

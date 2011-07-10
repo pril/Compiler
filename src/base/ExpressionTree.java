@@ -94,7 +94,7 @@ public class ExpressionTree implements BinaryTree {
 		Expression expression = (Expression) object;
 		ExpressionNode newExpression = new ExpressionNode(expression);
 		if (expression.isOperator())
-			switch (OperatorType.valueOf(expression.getObject())) {
+			switch (OperatorType.operatorValueOf(expression.getObject())) {
 			case KLAMMER_AUF:
 				optStack.push(newExpression);
 				break;
@@ -129,12 +129,12 @@ public class ExpressionTree implements BinaryTree {
 						ExpressionNode currentExpression = (ExpressionNode) optStack
 								.top();
 						optStack.pop();
-						if (OperatorType.valueOf(currentExpression.getData()
+						if (OperatorType.operatorValueOf(currentExpression.getData()
 								.getObject()) == OperatorType.KLAMMER_AUF)
 							optStack.push(currentExpression);
-						else if (OperatorType.valueOf(
+						else if (OperatorType.operatorValueOf(
 								currentExpression.getData().getObject())
-								.getPriority() < OperatorType.valueOf(
+								.getPriority() < OperatorType.operatorValueOf(
 								currentExpression.getData().getObject())
 								.getPriority())
 							optStack.push(currentExpression);

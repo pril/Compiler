@@ -1,5 +1,7 @@
 import utilities.exceptions.FileException;
+import utilities.exceptions.TreeException;
 import base.EingabeDateiReader;
+import base.ExpressionTree;
 import base.HashItem;
 import base.HashTableImpl;
 import base.Parser;
@@ -20,6 +22,7 @@ public class Compiler implements ParserBeobachter,EingabeDateiReaderBeobachter,B
 	public Compiler(String args[])
 	{
 		EingabeDateiReader eingabedateireader = new EingabeDateiReader();
+		ExpressionTree expressiontree = new ExpressionTree();
 		HashTableImpl<Expression,Double> hashtable = new HashTableImpl<Expression, Double>(100);
 		Parser parser = new Parser();
 		String line = "";
@@ -47,14 +50,14 @@ public class Compiler implements ParserBeobachter,EingabeDateiReaderBeobachter,B
 						 
 						 if (expressionlist.get(i).isOperator())
 						 {
-							 //Arithmetischer ausdruck. 
+							 expressiontree.insert(expressionlist.get(i));
 						 }
 						 if (expressionlist.get(i).isIdentifier())
 						 {
 							 if (!hashtable.containsKey(expressionlist.get(i)))
 								 throw new CompilerExceptions("Identifier " + expressionlist.get(i).getObject() + " ist unbekannt.");
 							 else
-								 System.out.println("Found: " + expressionlist.get(i).getObject());
+								 expressiontree.insert(expressionlist.get(i));
 						 }
 					 }
 					 if (expressionlist.get(i).isZuordnung())
@@ -94,6 +97,10 @@ public class Compiler implements ParserBeobachter,EingabeDateiReaderBeobachter,B
 				exception.printStackTrace();
 			}
 			catch(CompilerExceptions exception)
+			{
+				exception.printStackTrace();
+			}
+			catch(TreeException exception)
 			{
 				exception.printStackTrace();
 			}
