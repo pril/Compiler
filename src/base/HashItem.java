@@ -26,11 +26,11 @@ public class HashItem<Key,Value> implements base.interfaces.HashItem<Key, Value>
 
 	@Override
 	public void setValue(Value value) throws HashItemException {
-		if (value== null) 
-		{
-					throw new HashItemException("Value darf nicht null sein");
-		}
-		
+//		if (value== null) 
+//		{
+//					throw new HashItemException("Value darf nicht null sein");
+//		}
+//		doch darf es.
 		this.value = value;
 	}
 

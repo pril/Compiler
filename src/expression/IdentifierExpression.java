@@ -7,7 +7,7 @@ public class IdentifierExpression implements base.interfaces.Expression {
 
 	public IdentifierExpression(String name) throws IllegalArgumentException
 	{
-		if (value == null) throw new IllegalArgumentException("Value can't be null");
+		if (name == null) throw new IllegalArgumentException("Value can't be null");
 		this.name = name;
 	}
 

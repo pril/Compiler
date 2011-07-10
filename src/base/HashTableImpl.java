@@ -52,6 +52,7 @@ public class HashTableImpl<Key,Value> implements HashTable<Key, Value>, Beobacht
 			list =((DList)listarray.get(indexkey));
 			list.add(list.size(), hashitem);
 		}
+		System.out.println("Stop hier ist noch ein Fehler vorhanden.");
 	}
 
 	
@@ -64,7 +65,8 @@ public class HashTableImpl<Key,Value> implements HashTable<Key, Value>, Beobacht
 	private int generateKey(Key key) throws IllegalArgumentException
 	{
 		if (key == null) throw new IllegalArgumentException("Key kann nicht null sein.");
-		return key.hashCode()%max;
+		if ((key.hashCode()%max) <0) return (key.hashCode()%max)*-1;
+		return (key.hashCode()%max);
 	}
 
 	@Override
@@ -138,10 +140,13 @@ public class HashTableImpl<Key,Value> implements HashTable<Key, Value>, Beobacht
 	@Override
 	public void insert(Key key) throws IllegalArgumentException,
 			HashTableException, HashItemException {
-	if (listarray.size()==max) throw new HashTableException("Maximalgroesse ueberschritten.Hashtabelle ist voll.");
+	
+		//Weg damit die Hashtable muss aufgefuellt werden.
+		//if (listarray.size()==max) throw new HashTableException("Maximalgroesse ueberschritten.Hashtabelle ist voll.");
 		
 		int indexkey = generateKey(key);
 		HashItem<Key,Value> hashitem = new HashItem<Key, Value>(key,null);
+		if (indexkey<0) indexkey = indexkey * -1;
 		if (listarray.get(indexkey)==null)
 		{	DList list = new DList();
 			list.add(0,hashitem);
