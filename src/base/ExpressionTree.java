@@ -53,6 +53,7 @@ public class ExpressionTree implements BinaryTree {
 	 */
 	public Double calc() throws TreeException {
 		setRoot();
+		root.calc();
 		return root.getData().getValue();
 	}
 	

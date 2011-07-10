@@ -33,7 +33,7 @@ public class ExpressionNode implements Node<Expression> {
 		if (rightChild != null && leftChild != null){
 			leftChild.calc();
 			rightChild.calc();
-			switch (OperatorType.valueOf(data.getObject())) {
+			switch (OperatorType.operatorValueOf(data.getObject())) {
 			default:
 			case GETEILT:
 				if (rightChild.getValue() == 0)
