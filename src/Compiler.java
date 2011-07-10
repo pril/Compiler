@@ -69,17 +69,16 @@ public class Compiler implements ParserBeobachter,EingabeDateiReaderBeobachter,B
 						 	throw new CompilerExceptions("Identifier " + expressionlist.get(i).getObject() + " ist unbekannt.");
 						 base.interfaces.HashItem<Expression,Double> hashitem = hashtable.get(expressionlist.get(i));
 						 hashitem.setValue(expressionlist.get(i).getValue());
+							 System.out.println("Expression Tree ausgabe:"+ expressiontree.toString());	
+							 System.out.println("Auswertung des Expressiontrees ergibt:" + expressiontree.calc());
+						
 					 }
 					 if (expressionlist.get(i).isIdentifier())
 					 {
 						 hashtable.insert(expressionlist.get(i));
 					 }
 				 }
-				 if (hashtable.isEmpty())
-				 {
-					 System.out.println("Expression Tree ausgabe:"+ expressiontree.toString());	
-					 System.out.println("Auswertung des Expressiontrees ergibt:" + expressiontree.calc());
-				 }
+				 
 			 }
 			}
 			}
