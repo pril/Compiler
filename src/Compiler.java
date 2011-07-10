@@ -51,13 +51,17 @@ public class Compiler implements ParserBeobachter,EingabeDateiReaderBeobachter,B
 						 if (expressionlist.get(i).isOperator())
 						 {
 							 expressiontree.insert(expressionlist.get(i));
+							 System.out.println("Expression Tree ausgabe:"+ expressiontree.toString());
 						 }
 						 if (expressionlist.get(i).isIdentifier())
 						 {
 							 if (!hashtable.containsKey(expressionlist.get(i)))
 								 throw new CompilerExceptions("Identifier " + expressionlist.get(i).getObject() + " ist unbekannt.");
 							 else
+							 {
 								 expressiontree.insert(expressionlist.get(i));
+								 System.out.println("Expression Tree ausgabe:"+ expressiontree.toString());
+							 }
 						 }
 					 }
 					 if (expressionlist.get(i).isZuordnung())
@@ -72,7 +76,10 @@ public class Compiler implements ParserBeobachter,EingabeDateiReaderBeobachter,B
 						 hashtable.insert(expressionlist.get(i));
 					 }
 				 }
-			 
+				 if (hashtable.isEmpty())
+				 {
+					 System.out.println("Auswertung des Expressiontrees ergibt:" + expressiontree.calc());
+				 }
 			 }
 			}
 			}
