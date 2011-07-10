@@ -53,4 +53,13 @@ public class IdentifierExpression implements base.interfaces.Expression {
 		return indexkey;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof IdentifierExpression)
+		{
+			return getObject().equals(((IdentifierExpression)obj).getObject());	
+		}
+		return getObject().equals(obj);
+	}
+	
 }

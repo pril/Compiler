@@ -101,7 +101,7 @@ public class HashTableImpl<Key,Value> implements HashTable<Key, Value>, Beobacht
 			Iterator iterator = ((DList)listarray.get(indexkey)).iterator();
 			while(iterator.hasNext())
 			{
-				HashItem hashitem = (HashItem)iterator.next();
+				HashItem<Key,Value> hashitem = (HashItem<Key,Value>)iterator.next();
 				if (hashitem.getKey().equals(key)) return true;
 			}
 		}
