@@ -225,9 +225,18 @@ public class DList implements AbstractList {
     public String toString() {
         StringBuffer sb = new StringBuffer();
         DListElement le = first;
+        int i = 0;
         while (le != null) {
-            sb.append(" <-> ").append(le.data.toString());
+        	if (le.data == null)
+        	{
+        		sb.append(" <-> ").append(i).append(".").append("null");	
+        	}
+        	else
+        	{
+            sb.append(" <-> ").append(i).append(".").append(le.data.toString());
+        	}
             le = le.next;
+            i++;
         }
         return sb.toString();
     }

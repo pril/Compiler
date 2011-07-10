@@ -1,5 +1,6 @@
 package base;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import utilities.folz_list_klassen.normal.DList;
@@ -20,18 +21,18 @@ public class HashTableImpl<Key,Value> implements HashTable<Key, Value>, Beobacht
 
 	private static final int MIN_SIZE=1;
 	private int max = 0;
-	private DList listarray=null;
+	private ArrayList<DList> listarray=null;
 	private DList beobachter =null;
 	
 	public  HashTableImpl(int size) throws IllegalArgumentException
 	{
 		if (size<MIN_SIZE) throw new IllegalArgumentException("Wert muss immer positiv sein.");
 		max = size;
-		listarray = new DList();
-		for (int i = 0;i<size;i++)
-		{
-			listarray.add(i, null); //Null-Objekte einfuegen.
-		}
+		listarray = new ArrayList<DList>(max);
+//		for (int i = 0;i<size;i++)
+//		{
+//			listarray.add(i, null); //Null-Objekte einfuegen.
+//		}
 	}
 
 	@Override
@@ -42,7 +43,8 @@ public class HashTableImpl<Key,Value> implements HashTable<Key, Value>, Beobacht
 		int indexkey = generateKey(key);
 		HashItem<Key,Value> hashitem = new HashItem<Key, Value>(key,value);
 		if (listarray.get(indexkey)==null)
-		{	DList list = new DList();
+		{	
+			DList list = new DList();
 			list.add(0,hashitem);
 			listarray.add(indexkey, list);
 		}
@@ -95,6 +97,7 @@ public class HashTableImpl<Key,Value> implements HashTable<Key, Value>, Beobacht
 	@Override
 	public boolean containsKey(Key key) throws IllegalArgumentException {
 		int indexkey = generateKey(key);
+		System.out.println(listarray.toString());
 		if (listarray.get(indexkey)!=null)
 		{
 			

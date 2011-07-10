@@ -52,6 +52,8 @@ public class Compiler implements ParserBeobachter,EingabeDateiReaderBeobachter,B
 						 {
 							 if (!hashtable.containsKey(expressionlist.get(i)))
 								 throw new CompilerExceptions("Identifier " + expressionlist.get(i).getObject() + " ist unbekannt.");
+							 else
+								 System.out.println("Found: " + expressionlist.get(i).getObject());
 						 }
 					 }
 					 if (expressionlist.get(i).isZuordnung())
