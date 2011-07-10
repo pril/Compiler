@@ -91,12 +91,13 @@ public class Compiler implements ParserBeobachter,EingabeDateiReaderBeobachter,B
 			 else
 			 {
 				 if (zuordnung==true)
-				 {
+			     {
+			expressiontree.calc(); // baum operatoren aktualisieren
+			     System.out.println("Expression Tree ausgabe:\n"+ expressiontree.toString());
+			     System.out.println("Auswertung des Expressiontrees ergibt:" + expressiontree.calc());
+			     zuordnung = false;
+			     }
 				 System.out.println("Inhalt der Hashtable:"+hashtable.toString());
-				 System.out.println("Expression Tree ausgabe:\n"+ expressiontree.toString());
-				 System.out.println("Auswertung des Expressiontrees ergibt:" + expressiontree.calc());
-				 zuordnung = false;
-				 }
 				 
 			 }
 			}
@@ -106,6 +107,7 @@ public class Compiler implements ParserBeobachter,EingabeDateiReaderBeobachter,B
 			 System.out.println("Auswertung des Expressiontrees ergibt:" + expressiontree.calc());
 			 zuordnung = false;
 			 }
+			 
 			}
 			catch(FileReaderException exception)
 			{
