@@ -50,4 +50,21 @@ public class HashItem<Key,Value> implements base.interfaces.HashItem<Key, Value>
 		return 0;
 	}
 
+	@Override
+	public String toString()
+	{
+		StringBuilder sb = new StringBuilder();
+		if (key!=null)
+			sb.append("[Key:").append(key.toString()).append("]");
+		else
+			sb.append("[Key:").append("null]");
+		
+		if (value!=null)
+			sb.append("[Value:").append(value.toString()).append("]");
+		else
+			sb.append("[Value:").append("null]");
+		return sb.toString();
+		
+	}
+	
 }
