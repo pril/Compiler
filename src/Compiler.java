@@ -21,6 +21,7 @@ public class Compiler implements ParserBeobachter,EingabeDateiReaderBeobachter,B
 	
 	public Compiler(String args[])
 	{
+		boolean zuordnung =false;
 		EingabeDateiReader eingabedateireader = new EingabeDateiReader();
 		ExpressionTree expressiontree = new ExpressionTree();
 		HashTableImpl<Expression,Double> hashtable = new HashTableImpl<Expression, Double>(100);
@@ -69,9 +70,7 @@ public class Compiler implements ParserBeobachter,EingabeDateiReaderBeobachter,B
 						 	throw new CompilerExceptions("Identifier " + expressionlist.get(i).getObject() + " ist unbekannt.");
 						 hashtable.get(expressionlist.get(i)).setValue(expressionlist.get(i).getValue());
 //						 hashitem.setValue(expressionlist.get(i).getValue());
-							 System.out.println("Expression Tree ausgabe:\n"+ expressiontree.toString());	
-							 System.out.println("Auswertung des Expressiontrees ergibt:" + expressiontree.calc());
-						
+							 zuordnung = true;
 					 }
 					 if (expressionlist.get(i).isIdentifier())
 					 {
@@ -80,7 +79,23 @@ public class Compiler implements ParserBeobachter,EingabeDateiReaderBeobachter,B
 				 }
 				 
 			 }
+			 else
+			 {
+				 if (zuordnung==true)
+				 {
+				 System.out.println("Expression Tree ausgabe:\n"+ expressiontree.toString());	
+				 System.out.println("Auswertung des Expressiontrees ergibt:" + expressiontree.calc());
+				 zuordnung = false;
+				 }
+				 
+			 }
 			}
+			if (zuordnung==true)
+			 {
+			 System.out.println("Expression Tree ausgabe:\n"+ expressiontree.toString());	
+			 System.out.println("Auswertung des Expressiontrees ergibt:" + expressiontree.calc());
+			 zuordnung = false;
+			 }
 			}
 			catch(FileReaderException exception)
 			{
