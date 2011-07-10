@@ -69,11 +69,9 @@ public class ExpressionTree implements BinaryTree {
 		while (!optStack.isEmpty()) {
 			ExpressionNode newExpression = (ExpressionNode) optStack.top();
 			optStack.pop();
-			newExpression.rightChild = new ExpressionNode(
-					(Expression) opndStack.top());
+			newExpression.rightChild =(ExpressionNode) opndStack.top();
 			opndStack.pop();
-			newExpression.leftChild = new ExpressionNode(
-					(Expression) opndStack.top());
+			newExpression.leftChild = (ExpressionNode) opndStack.top();
 			opndStack.pop();
 			opndStack.push(newExpression);
 			return;
@@ -100,22 +98,16 @@ public class ExpressionTree implements BinaryTree {
 				break;
 			case KLAMMER_ZU:
 				while (!optStack.isEmpty()) {
-					ExpressionNode currentExpression = (ExpressionNode) optStack
-							.top();
+					ExpressionNode currentExpression = (ExpressionNode) optStack.top();
 					optStack.pop();
-					if (OperatorType.valueOf(
-							currentExpression.getData().getObject()).equals(
-							OperatorType.KLAMMER_AUF))
+					if (OperatorType.valueOf(currentExpression.getData().getObject()).equals(OperatorType.KLAMMER_AUF))
 						break;
 					else {
-						newExpression = new ExpressionNode(
-								(Expression) optStack.top());
+						newExpression = (ExpressionNode) optStack.top();
 						optStack.pop();
-						newExpression.rightChild = new ExpressionNode(
-								(Expression) opndStack.top());
+						newExpression.rightChild = (ExpressionNode) opndStack.top();
 						opndStack.pop();
-						newExpression.leftChild = new ExpressionNode(
-								(Expression) opndStack.top());
+						newExpression.leftChild = (ExpressionNode) opndStack.top();
 						opndStack.pop();
 						opndStack.push(newExpression);
 					}
@@ -126,42 +118,26 @@ public class ExpressionTree implements BinaryTree {
 					optStack.push(newExpression);
 				else {
 					while (!optStack.isEmpty()) {
-						ExpressionNode currentExpression = (ExpressionNode) optStack
-								.top();
+						ExpressionNode currentExpression = (ExpressionNode) optStack.top();
 						optStack.pop();
-						if (OperatorType.operatorValueOf(currentExpression.getData()
-								.getObject()) == OperatorType.KLAMMER_AUF)
+						if (OperatorType.operatorValueOf(currentExpression.getData().getObject()) == OperatorType.KLAMMER_AUF)
 							optStack.push(currentExpression);
-						else if (OperatorType.operatorValueOf(
-								currentExpression.getData().getObject())
-								.getPriority() < OperatorType.operatorValueOf(
-								currentExpression.getData().getObject())
-								.getPriority())
+						else if (OperatorType.operatorValueOf(currentExpression.getData().getObject()).getPriority() 
+								< OperatorType.operatorValueOf(newExpression.getData().getObject()).getPriority())
 							optStack.push(currentExpression);
 						else {
-							currentExpression.rightChild = new ExpressionNode(
-									((ExpressionNode) opndStack.top()).data);
+							currentExpression.rightChild = (ExpressionNode) opndStack.top();
 							opndStack.pop();
-							currentExpression.leftChild = new ExpressionNode(
-									((ExpressionNode) opndStack.top()).data);
+							currentExpression.leftChild = (ExpressionNode) opndStack.top();
 							opndStack.pop();
 							opndStack.push(currentExpression);
 						}
-						if (OperatorType.operatorValueOf(
-								currentExpression.getData().getObject())
-								.equals(OperatorType.KLAMMER_AUF)
-								|| OperatorType
-										.operatorValueOf(
-												currentExpression.getData()
-														.getObject())
-										.getPriority() < OperatorType
-										.operatorValueOf(
-												currentExpression.getData()
-														.getObject())
-										.getPriority())
+						if (OperatorType.operatorValueOf(currentExpression.getData().getObject()).equals(OperatorType.KLAMMER_AUF)
+								|| OperatorType.operatorValueOf(currentExpression.getData().getObject()).getPriority() 
+								< OperatorType.operatorValueOf(currentExpression.getData().getObject()).getPriority())
 							break;
-						optStack.push(currentExpression);
 					}
+					optStack.push(newExpression);
 				}
 				break;
 			}
