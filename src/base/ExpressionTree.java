@@ -147,15 +147,15 @@ public class ExpressionTree implements BinaryTree {
 							opndStack.pop();
 							opndStack.push(currentExpression);
 						}
-						if (OperatorType.valueOf(
+						if (OperatorType.operatorValueOf(
 								currentExpression.getData().getObject())
 								.equals(OperatorType.KLAMMER_AUF)
 								|| OperatorType
-										.valueOf(
+										.operatorValueOf(
 												currentExpression.getData()
 														.getObject())
 										.getPriority() < OperatorType
-										.valueOf(
+										.operatorValueOf(
 												currentExpression.getData()
 														.getObject())
 										.getPriority())
