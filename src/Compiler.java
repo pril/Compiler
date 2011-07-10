@@ -8,6 +8,7 @@ import base.exceptions.HashItemException;
 import base.exceptions.HashTableException;
 import base.interfaces.Beobachter;
 import base.interfaces.EingabeDateiReaderBeobachter;
+import base.interfaces.Expression;
 import base.interfaces.ParserBeobachter;
 import expression.Expressionlist;
 
@@ -18,7 +19,7 @@ public class Compiler implements ParserBeobachter,EingabeDateiReaderBeobachter,B
 	public Compiler(String args[])
 	{
 		EingabeDateiReader eingabedateireader = new EingabeDateiReader();
-		HashTableImpl<String,Double> hashtable = new HashTableImpl<String, Double>(100);
+		HashTableImpl<Expression,Double> hashtable = new HashTableImpl<Expression, Double>(100);
 		Parser parser = new Parser();
 		String line = "";
 		Expressionlist expressionlist = new Expressionlist();
@@ -49,18 +50,18 @@ public class Compiler implements ParserBeobachter,EingabeDateiReaderBeobachter,B
 						 }
 						 if (expressionlist.get(i).isIdentifier())
 						 {
-							 if (!hashtable.containsKey(expressionlist.get(i).getObject()))
+							 if (!hashtable.containsKey(expressionlist.get(i)))
 								 throw new CompilerExceptions("Identifier " + expressionlist.get(i).getObject() + " ist unbekannt.");
-							 						 }
+						 }
 					 }
 					 if (expressionlist.get(i).isZuordnung())
 					 {
-						 if (!hashtable.containsKey(expressionlist.get(i).getObject()))
+						 if (!hashtable.containsKey(expressionlist.get(i)))
 						 	throw new CompilerExceptions("Identifier " + expressionlist.get(i).getObject() + " ist unbekannt.");
 					 }
 					 if (expressionlist.get(i).isIdentifier())
 					 {
-						 hashtable.insert(expressionlist.get(i).getObject());
+						 hashtable.insert(expressionlist.get(i));
 					 }
 				 }
 			 
