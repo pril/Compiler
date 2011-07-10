@@ -1,5 +1,6 @@
 import utilities.exceptions.FileException;
 import base.EingabeDateiReader;
+import base.HashItem;
 import base.HashTableImpl;
 import base.Parser;
 import base.exceptions.CompilerExceptions;
@@ -60,7 +61,8 @@ public class Compiler implements ParserBeobachter,EingabeDateiReaderBeobachter,B
 					 {
 						 if (!hashtable.containsKey(expressionlist.get(i)))
 						 	throw new CompilerExceptions("Identifier " + expressionlist.get(i).getObject() + " ist unbekannt.");
-						 hashtable.get(expressionlist.get(i)).setValue(expressionlist.get(i).getValue());
+						 base.interfaces.HashItem<Expression,Double> hashitem = hashtable.get(expressionlist.get(i));
+						 hashitem.setValue(expressionlist.get(i).getValue());
 					 }
 					 if (expressionlist.get(i).isIdentifier())
 					 {

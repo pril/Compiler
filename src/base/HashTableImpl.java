@@ -196,7 +196,7 @@ public class HashTableImpl<Key,Value> implements HashTable<Key, Value>, Beobacht
 			while(iterator.hasNext())
 			{
 				hashitem=(HashItem<Key,Value>)iterator.next();
-				if (hashitem.equals(key))
+				if (hashitem.getKey().equals(key))
 				{
 					return hashitem;
 				}
