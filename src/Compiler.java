@@ -143,7 +143,7 @@ public class Compiler implements ParserBeobachter,EingabeDateiReaderBeobachter,B
 	}
 
 	@Override
-	public void parserRecievedLine(String line) {
+	public void parserReceivedLine(String line) {
 		System.out.println("Parser liest " + line);
 		
 	}
