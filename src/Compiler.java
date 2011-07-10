@@ -89,7 +89,7 @@ public class Compiler implements ParserBeobachter,EingabeDateiReaderBeobachter,B
 			 {
 				 if (zuordnung==true)
 				 {
-				 System.out.println("Expression Tree ausgabe:\n"+ expressiontree.toString());	
+				 System.out.println("Expression Tree ausgabe:\n"+ expressiontree.toString());
 				 System.out.println("Auswertung des Expressiontrees ergibt:" + expressiontree.calc());
 				 zuordnung = false;
 				 }
