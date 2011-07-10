@@ -76,10 +76,9 @@ public class ExpressionTree implements BinaryTree {
 			opndStack.push(newExpression);
 			return;
 		}
-		if (!optStack.isEmpty() || opndStack.size() > 1)
+		if (!optStack.isEmpty() || opndStack.size() != 1)
 			throw new TreeException(EXCEPTION_FALSE_ARITHMETIC_EXPRESSION);
-		if (opndStack.size() == 1)
-			root = (ExpressionNode) opndStack.top();
+		root = (ExpressionNode) opndStack.top();
 	}
 	
 	@Override
@@ -123,7 +122,7 @@ public class ExpressionTree implements BinaryTree {
 						if (OperatorType.operatorValueOf(currentExpression.getData().getObject()) == OperatorType.KLAMMER_AUF)
 							optStack.push(currentExpression);
 						else if (OperatorType.operatorValueOf(currentExpression.getData().getObject()).getPriority() 
-								< OperatorType.operatorValueOf(newExpression.getData().getObject()).getPriority())
+								> OperatorType.operatorValueOf(newExpression.getData().getObject()).getPriority())
 							optStack.push(currentExpression);
 						else {
 							currentExpression.rightChild = (ExpressionNode) opndStack.top();
@@ -134,7 +133,7 @@ public class ExpressionTree implements BinaryTree {
 						}
 						if (OperatorType.operatorValueOf(currentExpression.getData().getObject()).equals(OperatorType.KLAMMER_AUF)
 								|| OperatorType.operatorValueOf(currentExpression.getData().getObject()).getPriority() 
-								< OperatorType.operatorValueOf(currentExpression.getData().getObject()).getPriority())
+								> OperatorType.operatorValueOf(newExpression.getData().getObject()).getPriority())
 							break;
 					}
 					optStack.push(newExpression);
