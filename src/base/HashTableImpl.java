@@ -96,7 +96,6 @@ public class HashTableImpl<Key,Value> implements HashTable<Key, Value>, Beobacht
 	@Override
 	public boolean containsKey(Key key) throws IllegalArgumentException {
 		int indexkey = generateKey(key);
-		System.out.println(this.toString());
 		if (listarray[indexkey]!=null)
 		{
 			
@@ -152,7 +151,6 @@ public class HashTableImpl<Key,Value> implements HashTable<Key, Value>, Beobacht
 		{	DList list = new DList();
 			list.add(0,hashitem);
 			listarray[indexkey]= list;
-			System.out.println(toString());
 		}
 		else
 		{
