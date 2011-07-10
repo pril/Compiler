@@ -140,10 +140,10 @@ public class ExpressionTree implements BinaryTree {
 							optStack.push(currentExpression);
 						else {
 							currentExpression.rightChild = new ExpressionNode(
-									(Expression) opndStack.top());
+									((ExpressionNode) opndStack.top()).data);
 							opndStack.pop();
 							currentExpression.leftChild = new ExpressionNode(
-									(Expression) opndStack.top());
+									((ExpressionNode) opndStack.top()).data);
 							opndStack.pop();
 							opndStack.push(currentExpression);
 						}
