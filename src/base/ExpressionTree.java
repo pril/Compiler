@@ -52,30 +52,42 @@ public class ExpressionTree implements BinaryTree {
 	 *             leer ist.
 	 */
 	public Double calc() throws TreeException {
+		setRoot();
+		return root.getData().getValue();
+	}
+	
+	/**
+	 * Setzt root fuer den aktuellen baum und ermittelt ob der arithmetische Ausdruck auswertbar ist.
+	 * 
+	 * @throws TreeException
+	 *             wenn der Baum keinen gueltigen Ausdruck darstellt oder er
+	 *             leer ist.
+	 */
+	private void setRoot() throws TreeException{
 		if(size == 0)
 			throw new TreeException(EXCEPTION_IS_EMPTY);
+		while (!optStack.isEmpty()) {
+			ExpressionNode newExpression = (ExpressionNode) optStack.top();
+			optStack.pop();
+			newExpression.rightChild = new ExpressionNode(
+					(Expression) opndStack.top());
+			opndStack.pop();
+			newExpression.leftChild = new ExpressionNode(
+					(Expression) opndStack.top());
+			opndStack.pop();
+			opndStack.push(newExpression);
+			return;
+		}
 		if (!optStack.isEmpty() || opndStack.size() > 1)
 			throw new TreeException(EXCEPTION_FALSE_ARITHMETIC_EXPRESSION);
 		if (opndStack.size() == 1)
 			root = (ExpressionNode) opndStack.top();
-		return root.getData().getValue();
 	}
-
+	
 	@Override
 	public void insert(Object object) throws TreeException {
 		if (object == null)
-			while (!optStack.isEmpty()) {
-				ExpressionNode newExpression = (ExpressionNode) optStack.top();
-				optStack.pop();
-				newExpression.rightChild = new ExpressionNode(
-						(Expression) opndStack.top());
-				opndStack.pop();
-				newExpression.leftChild = new ExpressionNode(
-						(Expression) opndStack.top());
-				opndStack.pop();
-				opndStack.push(newExpression);
-				return;
-			}
+			throw new TreeException(EXCEPTION_RECEIVED_NULL);
 		size++;
 		if (!(object instanceof Expression))
 			throw new TreeException();
@@ -158,6 +170,11 @@ public class ExpressionTree implements BinaryTree {
 	}
 	
 	public String toString() {
+		try {
+			setRoot();
+		} catch (TreeException e) {
+			return "";
+		}
         StringBuffer sb = new StringBuffer();
         toString(sb, root, " ");
         return sb.toString();
