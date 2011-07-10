@@ -43,7 +43,7 @@ public class IdentifierExpression implements base.interfaces.Expression {
 
 	@Override
 	public int hashCode() {
-		char[] chararray = value.toCharArray();
+		char[] chararray = name.toCharArray();
 		int indexkey = 0;
 		// Ermittele index-Key fuer Chararray
 		for (int i = 0; i < chararray.length; i++) {
