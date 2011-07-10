@@ -34,5 +34,10 @@ public class KlammerAufExpression implements Expression {
 	@Override
 	public void setValue(Double newValue) {
 	}
+	
+	public String toString()
+	{
+		return getObject();
+	}
 
 }

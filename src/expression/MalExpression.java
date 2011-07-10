@@ -36,4 +36,8 @@ public class MalExpression implements Expression{
 		this.value = newValue;
 	}
 
+	public String toString()
+	{
+		return getObject();
+	}
 }

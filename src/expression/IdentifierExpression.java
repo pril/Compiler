@@ -66,4 +66,8 @@ public class IdentifierExpression implements base.interfaces.Expression {
 		return getObject().equals(obj);
 	}
 	
+	public String toString()
+	{
+		return getObject();
+	}
 }

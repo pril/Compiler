@@ -36,4 +36,8 @@ public class MinusExpression implements Expression{
 		this.value = newValue;
 	}
 
+	public String toString()
+	{
+		return getObject();
+	}
 }

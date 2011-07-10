@@ -37,4 +37,8 @@ public class GeteiltExpression implements Expression{
 		this.value = newValue;
 	}
 
+	public String toString()
+	{
+		return getObject();
+	}
 }

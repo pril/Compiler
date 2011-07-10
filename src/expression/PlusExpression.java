@@ -35,4 +35,8 @@ public class PlusExpression implements base.interfaces.Expression{
 		this.value = newValue;
 	}
 	
+	public String toString()
+	{
+		return getObject();
+	}
 }

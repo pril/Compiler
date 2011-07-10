@@ -35,4 +35,8 @@ public class KlammerZuExpression implements Expression {
 	public void setValue(Double newValue) {
 	}
 
+	public String toString()
+	{
+		return getObject();
+	}
 }

@@ -68,5 +68,9 @@ public class ZuordnungExpression implements Expression{
 		}
 		return getObject().equals(obj);
 	}
-	
+
+	public String toString()
+	{
+		return getObject();
+	}
 }
