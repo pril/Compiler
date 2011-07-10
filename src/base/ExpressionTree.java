@@ -74,7 +74,7 @@ public class ExpressionTree implements BinaryTree {
 			newExpression.leftChild = (ExpressionNode) opndStack.top();
 			opndStack.pop();
 			opndStack.push(newExpression);
-			return;
+//			return;
 		}
 		if (!optStack.isEmpty() || opndStack.size() != 1)
 			throw new TreeException(EXCEPTION_FALSE_ARITHMETIC_EXPRESSION);
