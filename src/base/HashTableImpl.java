@@ -186,7 +186,6 @@ public class HashTableImpl<Key,Value> implements HashTable<Key, Value>, Beobacht
 	public base.interfaces.HashItem<Key, Value> get(Key key)
 			throws IllegalArgumentException, HashTableException,
 			HashItemException {
-		if (listarray.length==max) throw new HashTableException("Maximalgroesse ueberschritten.Hashtabelle ist voll.");
 		
 		int indexkey = generateKey(key);
 		HashItem<Key,Value> hashitem = null;
