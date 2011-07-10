@@ -49,4 +49,24 @@ public class ZuordnungExpression implements Expression{
 		this.value = newValue;
 	}
 
+	@Override
+	public int hashCode() {
+		char[] chararray = name.toCharArray();
+		int indexkey = 0;
+		// Ermittele index-Key fuer Chararray
+		for (int i = 0; i < chararray.length; i++) {
+			indexkey = indexkey + ((int) chararray[i] * i);
+		}
+
+		return indexkey;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof IdentifierExpression)
+		{
+			return getObject().equals(((IdentifierExpression)obj).getObject());	
+		}
+		return getObject().equals(obj);
+	}
+	
 }

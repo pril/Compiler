@@ -31,6 +31,16 @@ public interface HashTable<Key,Value> {
 	public void insert(Key key,Value value) throws IllegalArgumentException,HashTableException,HashItemException;
 	
 	/**
+	 * Gibt ein HashItem zurueck.
+	 * @param key
+	 * @return
+	 * @throws IllegalArgumentException
+	 * @throws HashTableException
+	 * @throws HashItemException
+	 */
+	public HashItem<Key,Value> get(Key key) throws IllegalArgumentException,HashTableException,HashItemException;
+	
+	/**
 	 * Einfuegen eines Keys in die Tabelle
 	 * @param key
 	 * @throws IllegalArgumentException

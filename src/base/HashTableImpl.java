@@ -181,5 +181,29 @@ public class HashTableImpl<Key,Value> implements HashTable<Key, Value>, Beobacht
 		}
 		return sb.toString();
 	}
+
+	@Override
+	public base.interfaces.HashItem<Key, Value> get(Key key)
+			throws IllegalArgumentException, HashTableException,
+			HashItemException {
+		if (listarray.length==max) throw new HashTableException("Maximalgroesse ueberschritten.Hashtabelle ist voll.");
+		
+		int indexkey = generateKey(key);
+		HashItem<Key,Value> hashitem = null;
+		
+			DList list;
+			list = listarray[indexkey];
+			Iterator iterator = list.iterator();
+			while(iterator.hasNext())
+			{
+				hashitem=(HashItem<Key,Value>)iterator.next();
+				if (hashitem.equals(key))
+				{
+					return hashitem;
+				}
+			}
+			
+		return null;
+	}
 	
 }

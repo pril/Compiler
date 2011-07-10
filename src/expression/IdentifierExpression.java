@@ -59,6 +59,10 @@ public class IdentifierExpression implements base.interfaces.Expression {
 		{
 			return getObject().equals(((IdentifierExpression)obj).getObject());	
 		}
+		if (obj instanceof ZuordnungExpression)
+		{
+			return getObject().equals(((ZuordnungExpression)obj).getObject());	
+		}
 		return getObject().equals(obj);
 	}
 	
